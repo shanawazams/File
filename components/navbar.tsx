@@ -26,24 +26,24 @@ export default function Navbar({}): any {
         />
       </Link>
       <div className="gap-1 md:gap-2 lg:gap-4 hidden md:flex">
-        <Button variant="ghost" className="font-semibold text-md">
+        <Button variant="ghost" className="font-semibold text-md hover:bg-blue-500">
           <Link href="/">Home</Link>
         </Button>
         <Link href="/about">
-          <Button variant="ghost" className="font-semibold text-md">
+          <Button variant="ghost" className="font-semibold text-md hover:bg-blue-500">
             About
           </Button>
         </Link>
         <Link href="/privacy-policy">
-          <Button variant="ghost" className="font-semibold text-md">
+          <Button variant="ghost" className="font-semibold text-md hover:bg-blue-500">
             Privacy Policy
           </Button>
         </Link>
       </div>
-      {/* <Link href="https://github.com/benlhachemi/modifio.git">
+      <Link href= "">
         <Button
           variant="default"
-          className="rounded-full w-fit bg-orange-600 gap-2 items-center hidden md:flex"
+          className="rounded-full w-fit bg-blue-500 gap-2 items-center hidden md:flex"
           size="lg"
         >
           <span>Github Repo</span>
@@ -51,7 +51,7 @@ export default function Navbar({}): any {
             <BsGithub />
           </span>
         </Button>
-      </Link> */}
+      </Link>
 
       {/* MOBILE NAV */}
       <Sheet>
