@@ -7,7 +7,7 @@ import { MdClose } from "react-icons/md";
 import ReactDropzone from "react-dropzone";
 import bytesToSize from "@/utils/bytes-to-size";
 import fileToIcon from "@/utils/file-to-icon";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import compressFileName from "@/utils/compress-file-name";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -201,25 +201,67 @@ export default function Dropzone() {
       })
     );
   };
-  const checkIsReady = (): void => {
+
+  const checkIsReady = useCallback(() => {
     let tmp_is_ready = true;
-    actions.forEach((action: Action) => {
+    actions.forEach((action) => {
       if (!action.to) tmp_is_ready = false;
     });
     setIsReady(tmp_is_ready);
-  };
-  const deleteAction = (action: Action): void => {
-    setActions(actions.filter((elt) => elt !== action));
-    setFiles(files.filter((elt) => elt.name !== action.file_name));
-  };
+  }, [actions]);
+
+  const deleteAction = useCallback(
+    (action: {
+      file_name: any;
+      file?: any;
+      file_size?: number;
+      from?: string;
+      to?: String | null;
+      file_type?: string;
+      is_converting?: boolean | undefined;
+      is_converted?: boolean | undefined;
+      is_error?: boolean | undefined;
+      url?: any;
+      output?: any;
+    }) => {
+      setActions((prevActions) => prevActions.filter((elt) => elt !== action));
+      setFiles((prevFiles) =>
+        prevFiles.filter((elt) => elt.name !== action.file_name)
+      );
+    },
+    []
+  );
+
   useEffect(() => {
     if (!actions.length) {
       setIsDone(false);
       setFiles([]);
       setIsReady(false);
       setIsConverting(false);
-    } else checkIsReady();
-  }, [actions]);
+    } else {
+      checkIsReady();
+    }
+  }, [actions, checkIsReady]);
+
+  // const checkIsReady = (): void => {
+  //   let tmp_is_ready = true;
+  //   actions.forEach((action: Action) => {
+  //     if (!action.to) tmp_is_ready = false;
+  //   });
+  //   setIsReady(tmp_is_ready);
+  // };
+  // const deleteAction = (action: Action): void => {
+  //   setActions(actions.filter((elt) => elt !== action));
+  //   setFiles(files.filter((elt) => elt.name !== action.file_name));
+  // };
+  // useEffect(() => {
+  //   if (!actions.length) {
+  //     setIsDone(false);
+  //     setFiles([]);
+  //     setIsReady(false);
+  //     setIsConverting(false);
+  //   } else checkIsReady();
+  // }, [actions]);
   useEffect(() => {
     load();
   }, [checkIsReady]);
