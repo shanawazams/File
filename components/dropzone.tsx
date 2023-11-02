@@ -222,7 +222,7 @@ export default function Dropzone() {
   }, [actions]);
   useEffect(() => {
     load();
-  }, []);
+  }, [checkIsReady]);
   const load = async () => {
     const ffmpeg_response: FFmpeg = await loadFfmpeg();
     ffmpegRef.current = ffmpeg_response;
